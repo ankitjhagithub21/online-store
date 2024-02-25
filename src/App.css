@@ -8,24 +8,81 @@ body {
     font-family: "Inter", sans-serif;
 
 }
-button{
+
+button {
     outline: none;
 }
-.product{
+
+.product {
     max-height: 400px;
 }
 
 .loader {
-    
+
     width: 50px;
     aspect-ratio: 1;
-    --_c:no-repeat radial-gradient(farthest-side,#25b09b 92%,#0000);
-    background: 
-      var(--_c) top,
-      var(--_c) left,
-      var(--_c) right,
-      var(--_c) bottom;
+    --_c: no-repeat radial-gradient(farthest-side, #25b09b 92%, #0000);
+    background:
+        var(--_c) top,
+        var(--_c) left,
+        var(--_c) right,
+        var(--_c) bottom;
     background-size: 12px 12px;
     animation: l7 1s infinite;
-  }
-  @keyframes l7 {to{transform: rotate(.5turn)}}
+}
+
+@keyframes l7 {
+    to {
+        transform: rotate(.5turn)
+    }
+}
+
+#menuBtn{
+    position: absolute;
+    right: 0px;
+    top: 15px;
+    cursor: pointer;
+}
+
+@media (max-width:768px) {
+    #logo{
+        position: absolute;
+        left: 10px;
+        top: 15px;
+    }
+    #cartIcon{
+        position: absolute;
+        right: 40px;
+        top: 0px;
+    }
+    #header{
+        position: fixed;
+        width:100vw;
+        background-color: white;
+        top: 0px;
+        left: 0px;
+        height: 55px;
+        z-index: 999;
+    }
+    #navbar{
+        position: absolute;
+        width: 100vw;
+        background-color: white;
+        flex-direction: column;
+        align-items: start;
+        top: 50px;
+        padding: 10px;
+        transition: 0.5s;
+        z-index: -1;
+    }
+    #navbar a{
+        padding: 5px 10px;
+        margin: 5px auto;
+        width: 100%;
+        border-radius: 5px;
+    }
+    #navbar a:hover{
+        background-color: rgb(209, 200, 200);
+    }
+    
+}
