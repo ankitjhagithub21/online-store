@@ -1,99 +1,79 @@
-import React from 'react'
-
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { FaBars, FaTimes, FaShoppingCart } from 'react-icons/fa';
 import { useSelector } from 'react-redux';
-import {FaShoppingCart} from "react-icons/fa"
-const Header = () => {
-  const cart = useSelector(state=>state.cart.cart)
- 
+const Navbar = () => {
+  const [isOpen, setIsOpen] = useState(false);
+  const cartItems = useSelector(state=>state.cart.cart)
+
   return (
-    <nav className='bg-white'>
-  <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
-    <Link
-      to="/"
-      className="flex items-center space-x-3 rtl:space-x-reverse"
-     
-    >
-      <img
-        src="./logo.png"
-        className="h-8"
-        alt="Logo"
-      />
-      <span className="self-center text-xl font-bold whitespace-nowrap">
-        Online<span className='text-green-600'>Store</span>
-      </span>
-    </Link>
-    <button
-      data-collapse-toggle="navbar-default"
-      type="button"
-      className="inline-flex items-center p-2 w-10 h-10 justify-center text-sm outline-none md:hidden"
-      aria-controls="navbar-default"
-      aria-expanded="false"
-    >
-      <span className="sr-only">Open main menu</span>
-      <svg
-        className="w-5 h-5"
-        aria-hidden="true"
-        xmlns="http://www.w3.org/2000/svg"
-        fill="none"
-        viewBox="0 0 17 14"
-      >
-        <path
-          stroke="currentColor"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          strokeWidth={2}
-          d="M1 1h15M1 7h15M1 13h15"
-        />
-      </svg>
-    </button>
-    <div className="hidden w-full md:block md:w-auto" id="navbar-default">
-      <ul className="font-medium flex flex-col p-4 md:p-0 mt-4 border rounded-lg md:flex-row md:space-x-8 rtl:space-x-reverse md:mt-0 md:border-0 ">
-        <li>
-          <Link
-            to="/"
-            className="block py-2 px-3 rounded md:p-0 "
-       
-          >
-            Home
-          </Link>
-        </li>
-        <li>
-          <Link
-            to="/about"
-            className="block py-2 px-3  rounded md:p-0 "
+    <nav className="bg-white shadow-lg">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex justify-between items-center h-16">
+          <div className="flex">
+            <div className="flex-shrink-0 flex items-center">
+              <Link to="/" className="text-xl font-bold text-gray-800">
+                Online <span className='text-green-600'>Store</span>
+              </Link>
+            </div>
+            <div className="hidden sm:block sm:ml-6">
+              <div className="flex space-x-4">
+                <NavLink to="/" label="Home"  />
+                <NavLink to="/about" label="About" />
+                <NavLink to="/products" label="Products" />
+              </div>
+            </div>
+          </div>
+          <div className="flex items-center">
+            <Link to="/cart" className="relative mr-4">
+              <FaShoppingCart className="text-2xl text-gray-800" />
+              <span className="absolute -top-3 -right-3 bg-green-500 text-white rounded-full px-2 py-1 text-sm">
+                {cartItems.length}
+              </span>
+            </Link>
+            <div className="sm:hidden">
+              {isOpen ? (
+                <FaTimes
+                  className="text-xl text-gray-800 cursor-pointer"
+                  onClick={() => setIsOpen(false)}
+                />
+              ) : (
+                <FaBars
+                  className="text-2xl text-gray-800 cursor-pointer"
+                  onClick={() => setIsOpen(true)}
+                />
+              )}
+            </div>
+          </div>
+        </div>
+      </div>
+      <div className={`${isOpen ? 'block' : 'hidden'} sm:hidden`}>
+        <div className="px-2 pt-2 pb-3 space-y-1">
+          <MobileNavLink to="/" label="Home" />
+          <MobileNavLink to="/about" label="About" />
+          <MobileNavLink to="/products" label="Products" />
+        </div>
+      </div>
+    </nav>
+  );
+};
 
-            
-          >
-            About
-          </Link>
-        </li>
-        <li>
-          <Link
-            to="/products"
-            className="block py-2 px-3  rounded md:p-0 "
-           
-          >
-            Products
-          </Link>
-        </li>
-        <li>
-          <Link
-            to="/cart"
-            className="block px-2 py-1 w-fit rounded  md:border relative"
-           
-          >
-            <FaShoppingCart size={20} className='text-green-600'/>
-            <span className='absolute -top-2 -right-2 bg-green-600 text-white px-1 rounded-full'>{cart.length}</span>
-          </Link>
-        </li>
-       
-      </ul>
-    </div>
-  </div>
-</nav>
+const NavLink = ({ to, label }) => (
+  <Link
+    to={to}
+    className="text-gray-800 hover:bg-gray-200 px-3 py-2 rounded-md text-sm font-medium"
+  >
+    {label}
+  </Link>
+);
 
-  )
-}
+const MobileNavLink = ({ to, label }) => (
+  <Link
+    to={to}
+    className="text-gray-800 hover:bg-gray-200 block px-3 py-2 rounded-md text-base font-medium"
+  >
+    {label}
+  </Link>
+);
 
-export default Header
+export default Navbar;
